@@ -152,10 +152,7 @@ function getUserColor(username: string) {
     setMeals(data);
   }
 
-  function getMonthMeals() {
   // Removed unused function 'getMonthMeals'.
-  // return meals.filter((m: any) => m.date.startsWith(month));
-  }
 
   // Build grid: days in month, each cell lists meals for that day, show day of week, weeks start on Sunday
     // Removed duplicate allDayNames declaration

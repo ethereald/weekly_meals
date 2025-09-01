@@ -1,17 +1,17 @@
 import { NextResponse } from 'next/server';
-import { User, findUser, getAllUsers, createUser } from '@/lib/users';
+import { getAllUsers, createUser } from '@/lib/users';
 
 export async function GET() {
   // Return all users except passwords (include weekStart and other fields)
-  return NextResponse.json(getAllUsers().map(({ password, ...u }) => ({ ...u }))); 
+  return NextResponse.json(getAllUsers().map(({ password: _pw, ...u }) => ({ ...u })));
 }
 
 export async function POST(request: Request) {
-  const { username, password, role } = await request.json();
-  if (!username || !password || !role) {
+  const { username, role } = await request.json();
+  if (!username || !role) {
     return NextResponse.json({ success: false, error: 'Missing fields' }, { status: 400 });
   }
-  const user = createUser(username, password, role);
+  const user = createUser(username, '', role);
   if (!user) {
     return NextResponse.json({ success: false, error: 'User already exists' }, { status: 409 });
   }

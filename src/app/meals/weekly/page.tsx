@@ -113,15 +113,6 @@ const WeeklyMealsContent: React.FC = () => {
     base.setDate(diff);
     return base.toISOString().slice(0, 10);
   }
-  function getWeekMeals() {
-    const start = new Date(weekStart);
-    const end = new Date(start);
-    end.setDate(start.getDate() + 6);
-    return meals.filter((m: Meal) => {
-      const d = new Date(m.date);
-      return d >= start && d <= end;
-    });
-  }
   function getWeekGrid() {
     const allDayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const weekStartName = getUserWeekStart();
