@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "date": "2025-09-01",
+    "username": "admin",
+    "dish": "Spaghetti Bolognese"
+  },
+  {
+    "id": 4,
+    "date": "2025-09-03",
+    "username": "klai",
+    "dish": "氣炸雞髀"
+  },
+  {
+    "id": 5,
+    "date": "2025-09-02",
+    "username": "cinder",
+    "dish": "雞排"
+  },
+  {
+    "id": 6,
+    "date": "2025-09-02",
+    "username": "cinder",
+    "dish": "Veggie"
+  },
+  {
+    "id": 3,
+    "date": "2025-09-02",
+    "username": "klai",
+    "dish": "咖哩魚蛋"
+  },
+  {
+    "id": 2,
+    "date": "2025-09-02",
+    "username": "klai",
+    "dish": "氣炸南乳骨"
+  },
+  {
+    "id": 7,
+    "date": "2025-09-04",
+    "username": "klai",
+    "dish": "氣炸南乳骨"
+  }
+]

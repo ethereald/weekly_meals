@@ -1,36 +1,118 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# Weekly Meals Planner
 
-First, run the development server:
+A modern meal planning web app built with Next.js, TypeScript, and Tailwind CSS. Plan, track, and visualize meals for yourself or your family with personalized calendar views, dish tracking, and user management.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features & Implementation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 1. Dishes Page
+- Displays a list of unique dishes for the logged-in user.
+- Shows a counter for how many times each dish has been cooked.
+- Allows editing dish names (updates all instances for the user).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 2. Daily View
+- Shows meals for a selected day.
+- Add new meals with a dropdown to select from previously saved dishes.
+- Navigation to other views (Dishes, Weekly, Monthly).
 
-## Learn More
+### 3. Weekly View
+- Displays a grid of meals for the selected week.
+- Week start day is personalized per user (set in Account page).
+- Add meals for any day with dish dropdown.
+- Color-coded user display names.
 
-To learn more about Next.js, take a look at the following resources:
+### 4. Monthly View
+- Calendar grid of meals for the selected month.
+- Week start day is personalized per user.
+- Click any week to jump to weekly view.
+- Tooltips show full dish name and user display name.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 5. Account Page
+- Update display name, user color, password, and start day of week.
+- Changes persist to backend and localStorage.
+- Personalized calendar logic across all views.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 6. Admin Panel (for admin users)
+- Manage users and meals (add/remove/edit).
+- Accessible only to users with admin role.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Technologies Used
+- **Next.js** (App Router, API routes)
+- **React** (Hooks, functional components)
+- **TypeScript** (type safety)
+- **Tailwind CSS** (modern UI styling)
+- **Node.js** (API backend)
+- **JSON file storage** (`users.json`, `meals.json`)
+- **pnpm** (package manager)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Initial Setup
+
+1. **Install dependencies**
+	```powershell
+	pnpm install
+	```
+
+2. **Start the development server**
+	```powershell
+	pnpm dev
+	```
+	App runs at `http://localhost:3000`
+
+3. **Login**
+	- Default admin user: `admin` / `admin`
+	- Add users via admin panel or manually in `users.json`
+
+---
+
+## Deployment Instructions
+
+1. **Build for production**
+	```powershell
+	pnpm build
+	```
+
+2. **Start production server**
+	```powershell
+	pnpm start
+	```
+
+3. **Environment**
+	- Node.js 18+
+	- Windows, Mac, or Linux
+
+---
+
+## File Structure Overview
+
+- `src/app/meals/page.tsx` — Dishes page
+- `src/app/meals/daily/page.tsx` — Daily view
+- `src/app/meals/weekly/page.tsx` — Weekly view
+- `src/app/meals/monthly/page.tsx` — Monthly view
+- `src/app/account/page.tsx` — Account management
+- `src/app/admin/page.tsx` — Admin panel
+- `src/app/api/*` — API routes
+- `src/lib/users.json` — User data
+- `src/lib/meals.json` — Meal data
+
+---
+
+## Customization & Extensibility
+- Add new features by editing React pages in `src/app/meals/`.
+- Backend logic in `src/app/api/` and `src/lib/`.
+- UI styling via Tailwind CSS classes.
+
+---
+
+## License
+MIT
+
+---
+
+## Author
+Kelvin Lai & Family

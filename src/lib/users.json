@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "username": "admin",
+    "password": "admin",
+    "role": "admin",
+    "displayName": "Admin"
+  },
+  {
+    "id": 2,
+    "username": "klai",
+    "password": "meals",
+    "role": "user",
+    "displayName": "Kelvin",
+    "color": "bg-teal-500 text-white",
+    "weekStart": "Sunday"
+  },
+  {
+    "id": 3,
+    "username": "cinder",
+    "password": "meals",
+    "role": "user",
+    "displayName": "Mom",
+    "color": "bg-orange-500 text-white",
+    "weekStart": "Sunday"
+  }
+]
