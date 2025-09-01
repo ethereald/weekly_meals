@@ -1,14 +1,21 @@
 "use client";
 import { useEffect, useState } from "react";
+
+type Meal = {
+  id: string;
+  date: string;
+  dish: string;
+  username: string;
+};
 import { useRouter } from "next/navigation";
 
 export default function DailyMealsPage() {
   // Get unique dishes for current user
   function getUserDishes() {
     if (!user) return [];
-    const userMeals = meals.filter((m: any) => m.username === user.username);
-    const dishSet = new Set<string>();
-    userMeals.forEach((m: any) => dishSet.add(m.dish));
+  const userMeals = meals.filter((m: Meal) => m.username === user.username);
+  const dishSet = new Set<string>();
+  userMeals.forEach((m: Meal) => dishSet.add(m.dish));
     return Array.from(dishSet);
   }
   const [showAdd, setShowAdd] = useState(false);
@@ -87,7 +94,7 @@ export default function DailyMealsPage() {
   }
 
   function getDayMeals() {
-    return meals.filter((m: any) => m.date === date);
+  return meals.filter((m: Meal) => m.date === date);
   }
 
   function changeDay(offset: number) {
@@ -212,7 +219,7 @@ export default function DailyMealsPage() {
         {getDayMeals().length === 0 ? (
           <div className="text-gray-500">No meals planned for this day.</div>
         ) : (
-          getDayMeals().map((m: any) => (
+          getDayMeals().map((m: Meal) => (
             <div key={m.id} className="border rounded p-4 bg-gray-50 flex items-center gap-2">
               <button
                 className="px-2 py-1 bg-red-200 rounded text-red-800 font-bold text-lg"

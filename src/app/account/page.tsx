@@ -1,11 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 export default function AccountPage() {
   const [user, setUser] = useState<{ email: string; username: string; displayName?: string; color?: string; weekStart?: string } | null>(null);
   const [weekStart, setWeekStart] = useState<string>("Monday");
   const [displayName, setDisplayName] = useState("");
-  const defaultUserColors = [
+  const defaultUserColors = useMemo(() => [
     "bg-blue-400 text-white",
     "bg-green-500 text-white",
     "bg-yellow-500 text-white",
@@ -16,7 +16,7 @@ export default function AccountPage() {
     "bg-red-500 text-white",
     "bg-indigo-500 text-white",
     "bg-cyan-500 text-white",
-  ];
+  ], []);
   const [userColors, setUserColors] = useState<string[]>(defaultUserColors);
   const [color, setColor] = useState<string>("");
   const [oldPassword, setOldPassword] = useState("");
@@ -48,7 +48,7 @@ export default function AccountPage() {
       // Try to fetch user info from backend if localStorage is not available
       const fetchUser = async () => {
         // Try to get username from session or prompt (customize as needed)
-        let username = "";
+  // Removed unused variable 'username'.
         // If you have a session or context, get username from there
         // For demo, fallback to first user in backend
         const res = await fetch("/api/users");
@@ -75,7 +75,7 @@ export default function AccountPage() {
       };
       fetchUser();
     }
-  }, []);
+  }, [defaultUserColors]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

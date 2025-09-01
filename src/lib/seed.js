@@ -1,5 +1,5 @@
-const Database = require('better-sqlite3');
-const path = require('path');
+import Database from 'better-sqlite3';
+import path from 'path';
 
 const dbPath = path.join(process.cwd(), 'weekly_meals.sqlite');
 const db = new Database(dbPath);

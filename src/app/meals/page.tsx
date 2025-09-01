@@ -1,14 +1,21 @@
 "use client";
 import { useEffect, useState } from "react";
+
+type Meal = {
+  id: string;
+  date: string;
+  dish: string;
+  username: string;
+};
 import { useRouter } from "next/navigation";
 
 export default function MealsPage() {
   // Helper: get unique dishes for current user
   function getUserDishes() {
     if (!user) return [];
-    const userMeals = meals.filter((m: any) => m.username === user.username);
-    const dishSet = new Set<string>();
-    userMeals.forEach((m: any) => dishSet.add(m.dish));
+  const userMeals = meals.filter((m: Meal) => m.username === user.username);
+  const dishSet = new Set<string>();
+  userMeals.forEach((m: Meal) => dishSet.add(m.dish));
     return Array.from(dishSet);
   }
   const router = useRouter();
@@ -164,7 +171,7 @@ export default function MealsPage() {
         <div className="grid grid-cols-1 gap-6">
           {getUserDishes().map((dishName, idx) => {
             // Count how many times this dish is cooked for the current user
-            const dishCount = user ? meals.filter((m: any) => m.username === user.username && m.dish === dishName).length : 0;
+            const dishCount = user ? meals.filter((m: Meal) => m.username === user.username && m.dish === dishName).length : 0;
             return (
               <div key={dishName} className="rounded-2xl bg-white shadow-lg p-6 relative group hover:shadow-2xl transition-all border border-blue-100 flex flex-col gap-2">
                 <div className="flex items-center gap-3 justify-between">
@@ -177,7 +184,7 @@ export default function MealsPage() {
                           setMessage("");
                           // Update all meals for this user and dish
                           if (!user) return;
-                          const userMeals: any[] = meals.filter((m: any) => m.username === user.username && m.dish === dishName);
+                          const userMeals: Meal[] = meals.filter((m: Meal) => m.username === user.username && m.dish === dishName);
                           let success = true;
                           for (const m of userMeals) {
                             const res = await fetch("/api/meals", {

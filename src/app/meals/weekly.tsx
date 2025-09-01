@@ -1,17 +1,24 @@
 "use client";
 import { useEffect, useState } from "react";
+
+type Meal = {
+  id: string;
+  date: string;
+  dish: string;
+  username: string;
+};
 import { useRouter } from "next/navigation";
 
 export default function WeeklyMealsPage() {
   const router = useRouter();
-  const [user, setUser] = useState<{ username: string } | null>(null);
+  // Removed unused variable 'user'.
   const [meals, setMeals] = useState([]);
   const [weekStart, setWeekStart] = useState("");
 
   useEffect(() => {
     const stored = localStorage.getItem("user");
     if (stored) {
-      setUser(JSON.parse(stored));
+  // Removed setUser usage since 'user' is not used.
     } else {
       router.replace("/login");
     }
@@ -29,7 +36,7 @@ export default function WeeklyMealsPage() {
     const start = new Date(weekStart);
     const end = new Date(start);
     end.setDate(start.getDate() + 6);
-    return meals.filter((m: any) => {
+    return meals.filter((m: Meal) => {
       const d = new Date(m.date);
       return d >= start && d <= end;
     });
@@ -63,7 +70,7 @@ export default function WeeklyMealsPage() {
           </tr>
         </thead>
         <tbody>
-          {getWeekMeals().map((m: any) => (
+          {getWeekMeals().map((m: Meal) => (
             <tr key={m.id}>
               <td className="p-2 border">{m.date}</td>
               <td className="p-2 border">{m.dish}</td>

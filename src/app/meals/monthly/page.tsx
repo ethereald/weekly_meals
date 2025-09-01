@@ -8,10 +8,12 @@ export default function MonthlyMealsPage() {
   const allDayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   // Get user's preferred week start from localStorage
   function getUserWeekStart() {
-    const stored = localStorage.getItem("user");
-    if (stored) {
-      const u = JSON.parse(stored);
-      return u.weekStart || "Monday";
+    if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+      const stored = localStorage.getItem("user");
+      if (stored) {
+        const u = JSON.parse(stored);
+        return u.weekStart || "Monday";
+      }
     }
     return "Monday";
   }
@@ -64,8 +66,8 @@ export default function MonthlyMealsPage() {
         map[String(u.id)] = u;
       }
       setUserMap(map);
-    } catch (e) {
-      setUserMap({});
+      } catch {
+        setUserMap({});
     }
   }
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
@@ -128,18 +130,20 @@ function getUserColor(username: string) {
   const [month, setMonth] = useState(currentMonth);
 
   useEffect(() => {
-    const stored = localStorage.getItem("user");
-    if (stored) {
-      const u = JSON.parse(stored);
-      setUser({
-        username: u.username,
-        role: u.role,
-        displayName: u.displayName || u.username
-      });
-    } else {
-      router.replace("/login");
+    if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+      const stored = localStorage.getItem("user");
+      if (stored) {
+        const u = JSON.parse(stored);
+        setUser({
+          username: u.username,
+          role: u.role,
+          displayName: u.displayName || u.username
+        });
+      } else {
+        router.replace("/login");
+      }
+      fetchMeals();
     }
-    fetchMeals();
   }, [router]);
 
   async function fetchMeals() {
@@ -149,7 +153,8 @@ function getUserColor(username: string) {
   }
 
   function getMonthMeals() {
-    return meals.filter((m: any) => m.date.startsWith(month));
+  // Removed unused function 'getMonthMeals'.
+  // return meals.filter((m: any) => m.date.startsWith(month));
   }
 
   // Build grid: days in month, each cell lists meals for that day, show day of week, weeks start on Sunday
@@ -164,8 +169,8 @@ function getUserColor(username: string) {
       const dateStr = `${month}-${String(i).padStart(2, "0")}`;
       const d = new Date(dateStr);
       // getDay: 0=Sun, 1=Mon, ..., 6=Sat
-      let dayIdx = (d.getDay() - startIdx + 7) % 7;
-      const mealsForDay = meals.filter((m: any) => m.date === dateStr);
+  const dayIdx = (d.getDay() - startIdx + 7) % 7;
+  const mealsForDay = meals.filter((m: { date: string }) => m.date === dateStr);
       week[dayIdx] = { date: dateStr, meals: mealsForDay, dayOfWeek: dayNames[dayIdx] };
       // If last day of week or last day of month, push week and reset
       if (dayIdx === 6 || i === daysInMonth) {
@@ -219,8 +224,10 @@ function getUserColor(username: string) {
               <button
                 className="block w-full text-left px-4 py-2 hover:bg-blue-50 text-red-600 font-medium"
                 onClick={() => {
-                  localStorage.removeItem('user');
-                  window.location.href = '/login';
+                  if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+                    localStorage.removeItem('user');
+                    window.location.href = '/login';
+                  }
                 }}
               >
                 Logout
@@ -300,7 +307,7 @@ function getUserColor(username: string) {
                             {day.meals.length === 0 ? (
                               <div className="text-gray-500 text-xs">No meals</div>
                             ) : (
-                              day.meals.map((m: any) => (
+                              day.meals.map((m: { id: string; dish: string; username: string }) => (
                                 <div
                                   key={m.id}
                                   data-dishid={m.id}

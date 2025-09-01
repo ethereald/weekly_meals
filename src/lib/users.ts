@@ -124,12 +124,12 @@ export function deleteUser(id: number): boolean {
   writeUsers(users);
   // Also delete all dishes for this user from meals.json
   if (deletedUser) {
-    const fs = require('fs');
-    const path = require('path');
+  // ...existing code...
+  // Already imported fs and path above
     const MEALS_PATH = path.join(process.cwd(), 'src', 'lib', 'meals.json');
     if (fs.existsSync(MEALS_PATH)) {
       const meals = JSON.parse(fs.readFileSync(MEALS_PATH, 'utf-8'));
-      const filteredMeals = meals.filter((m: any) => m.username !== deletedUser.username);
+  const filteredMeals = meals.filter((m: { username: string }) => m.username !== deletedUser.username);
       fs.writeFileSync(MEALS_PATH, JSON.stringify(filteredMeals, null, 2));
     }
   }

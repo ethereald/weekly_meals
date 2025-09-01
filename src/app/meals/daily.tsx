@@ -1,17 +1,24 @@
 "use client";
 import { useEffect, useState } from "react";
+
+type Meal = {
+  id: string;
+  date: string;
+  dish: string;
+  username: string;
+};
 import { useRouter } from "next/navigation";
 
 export default function DailyMealsPage() {
   const router = useRouter();
-  const [user, setUser] = useState<{ username: string } | null>(null);
+  // Removed unused variable 'user'.
   const [meals, setMeals] = useState([]);
   const [date, setDate] = useState("");
 
   useEffect(() => {
     const stored = localStorage.getItem("user");
     if (stored) {
-      setUser(JSON.parse(stored));
+  // Removed setUser usage since 'user' is not used.
     } else {
       router.replace("/login");
     }
@@ -26,7 +33,7 @@ export default function DailyMealsPage() {
 
   function getDayMeals() {
     if (!date) return [];
-    return meals.filter((m: any) => m.date === date);
+    return meals.filter((m: Meal) => m.date === date);
   }
 
   return (
@@ -57,7 +64,7 @@ export default function DailyMealsPage() {
           </tr>
         </thead>
         <tbody>
-          {getDayMeals().map((m: any) => (
+          {getDayMeals().map((m: Meal) => (
             <tr key={m.id}>
               <td className="p-2 border">{m.date}</td>
               <td className="p-2 border">{m.dish}</td>

@@ -1,10 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
+
+type User = {
+  id: string;
+  username: string;
+  role: string;
+};
 import { useRouter } from "next/navigation";
 
 export default function AdminUserManagement() {
   const router = useRouter();
-  const [user, setUser] = useState<{ id: string; email: string; role: string } | null>(null);
+  // Removed unused variable 'user'.
   const [users, setUsers] = useState([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -22,7 +28,7 @@ export default function AdminUserManagement() {
     const stored = localStorage.getItem("user");
     if (stored) {
       const u = JSON.parse(stored);
-      setUser(u);
+  // Removed setUser usage since 'user' is not used.
       if (u.role !== "admin") {
         router.replace("/login");
       } else {
@@ -31,7 +37,7 @@ export default function AdminUserManagement() {
     } else {
       router.replace("/login");
     }
-  }, []);
+  }, [router]);
 
   async function handleAddUser(e: React.FormEvent) {
     e.preventDefault();
@@ -129,7 +135,7 @@ export default function AdminUserManagement() {
           </tr>
         </thead>
         <tbody>
-          {users.map((u: any) => (
+          {users.map((u: User) => (
             <tr key={u.id}>
               <td className="p-2 border">{u.username}</td>
               <td className="p-2 border">
