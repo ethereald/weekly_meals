@@ -1,6 +1,5 @@
 import { deleteUser } from '@/lib/users';
 import { NextResponse } from 'next/server';
-import { users } from '@/lib/users';
 
 export async function POST(request: Request) {
   const { id } = await request.json();
