@@ -72,6 +72,41 @@ A modern meal planning web app built with Next.js, TypeScript, and Tailwind CSS.
 
 ## Deployment Instructions
 
+### Data Source Switching: D1 SQL (Cloudflare) vs JSON (Local)
+
+By default, the app uses local JSON files (`meals.json`, `users.json`) for development and testing.
+
+For Cloudflare production, you can enable D1 SQL support:
+1. **Set the environment variable**
+	- `USE_D1=1`
+2. **Bind your Cloudflare D1 database as `DB`**
+	- In your `wrangler.toml` (Cloudflare config), add:
+	  ```toml
+	  [[d1_databases]]
+	  binding = "DB"
+	  database_name = "your-database-name"
+	  database_id = "your-database-id"
+	  ```
+	- This makes the D1 database available as `globalThis.env.DB` in your Worker.
+3. **Deploy your Worker**
+	- The app will automatically use D1 SQL for meal data when `USE_D1=1` is set.
+
+No changes needed for local development; it will continue using JSON files.
+
+#### Example: Enable D1 SQL for Cloudflare
+```sh
+export USE_D1=1
+# Wrangler will bind D1 as DB per wrangler.toml
+```
+
+#### Example: Local Development (default)
+```sh
+# No USE_D1 variable needed
+pnpm dev
+```
+
+---
+
 1. **Build for production**
 	```powershell
 	pnpm build
