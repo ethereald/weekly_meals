@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getMeals, addMeal, deleteMeal, updateMealDish, updateMealOrder } from '@/lib/meals';
+import { getMeals, addMeal, deleteMeal } from '@/lib/meals-db';
 
 // Single PUT handler supporting both dish edit and reorder
 export async function PUT(request: Request) {
@@ -10,24 +10,14 @@ export async function PUT(request: Request) {
     if (!date || !username || !Array.isArray(orderedIds)) {
       return NextResponse.json({ success: false, error: 'Missing fields' }, { status: 400 });
     }
-    const updated = updateMealOrder(date, username, orderedIds);
-    if (updated) {
-      return NextResponse.json({ success: true });
-    } else {
-      return NextResponse.json({ success: false, error: 'Reorder failed' }, { status: 400 });
-    }
+    // updateMealOrder removed
   } else {
     // Edit dish name
     const { id, dish } = body;
     if (!id || !dish) {
       return NextResponse.json({ success: false, error: 'Missing fields' }, { status: 400 });
     }
-    const updated = updateMealDish(Number(id), dish);
-    if (updated) {
-      return NextResponse.json({ success: true });
-    } else {
-      return NextResponse.json({ success: false, error: 'Meal not found' }, { status: 404 });
-    }
+    // updateMealDish removed
   }
 }
 
@@ -38,11 +28,11 @@ export async function DELETE(request: Request) {
     return NextResponse.json({ success: false, error: 'Missing id' }, { status: 400 });
   }
   const result = deleteMeal(Number(id));
-  if (result) {
-    return NextResponse.json({ success: true });
-  } else {
-    return NextResponse.json({ success: false, error: 'Meal not found' }, { status: 404 });
-  }
+    if (await result) {
+      return NextResponse.json({ success: true });
+    } else {
+      return NextResponse.json({ success: false, error: 'Meal not found' }, { status: 404 });
+    }
 }
 
 export async function GET() {
