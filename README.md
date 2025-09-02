@@ -72,6 +72,22 @@ A modern meal planning web app built with Next.js, TypeScript, and Tailwind CSS.
 
 ## Deployment Instructions
 
+### D1 SQL Database Initialization (Cloudflare)
+
+Before running your app in production on Cloudflare, you must initialize your D1 database with the required tables.
+
+1. **Run the schema file**
+	- Use the provided `d1-schema.sql` file in the project root.
+	- You can run this SQL using the Cloudflare dashboard, Wrangler CLI, or any D1 SQL tool:
+	  ```sh
+	  wrangler d1 execute <your-database-name> --file=./d1-schema.sql
+	  ```
+2. **Tables created:**
+	- `meals`: Stores all meal records
+	- `users`: Stores user accounts and roles
+
+Make sure your D1 database is initialized before deploying the app to production.
+
 ### Data Source Switching: D1 SQL (Cloudflare) vs JSON (Local)
 
 By default, the app uses local JSON files (`meals.json`, `users.json`) for development and testing.
