@@ -5,10 +5,9 @@ import path from 'path';
 
 const MEALS_PATH = path.join(process.cwd(), 'src', 'lib', 'meals.json');
 
-// Use SQL in production, JSON locally
-const isProduction = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production';
+// Use SQL if DATABASE_URL is set, otherwise JSON
 let pool: Pool | null = null;
-if (isProduction && process.env.DATABASE_URL) {
+if (process.env.DATABASE_URL) {
   pool = new Pool({ connectionString: process.env.DATABASE_URL });
 }
 
