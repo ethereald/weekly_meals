@@ -1,6 +1,10 @@
 
 import type { Meal } from './meals';
 
+// Static config: set to 'json' for local, 'd1' for Cloudflare production
+const DATA_SOURCE: 'json' | 'd1' = 'd1';    // Change to 'd1' for Cloudflare
+// const DATA_SOURCE: 'json' | 'd1' = 'json';  // Change to 'json' for local
+
 // Type definitions for Cloudflare D1
 declare global {
   // Cloudflare Workers environment bindings
@@ -30,7 +34,7 @@ function getMealsFromJson(): Meal[] {
 }
 
 export async function getMeals(): Promise<Meal[]> {
-  if (process.env.USE_D1 === '1') {
+  if (DATA_SOURCE === 'd1' && typeof globalThis.env !== 'undefined' && globalThis.env.DB) {
     return await getMealsFromD1();
   }
   return getMealsFromJson();
