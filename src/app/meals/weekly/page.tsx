@@ -368,7 +368,7 @@ const WeeklyMealsContent: React.FC = () => {
         </div>
       );
 }
-// Removed stray bracket
+
 export default function WeeklyMealsPage() {
   return (
     <Suspense>

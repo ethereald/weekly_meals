@@ -161,6 +161,12 @@ export default function DailyMealsPage() {
             menu.classList.toggle('hidden');
           };
           document.addEventListener('click', (e) => {
+      async function fetchMeals() {
+        const res = await fetch("/api/meals");
+        const data = await res.json();
+        setMeals(data);
+        setLoading(false);
+      }
             if (!btn.contains(e.target) && !menu.contains(e.target)) {
               menu.classList.add('hidden');
             }
